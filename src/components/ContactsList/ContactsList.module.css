@@ -1,0 +1,30 @@
+.title{
+text-align: center;
+color:  #394550;
+}
+.item{
+        background-color: rgb(188, 204, 221);
+        border: 1px solid #bacfdf;
+        padding: 8px;
+        color: #394550;
+        font-size: large;
+        font-weight: 500;
+        margin-bottom: 8px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+}
+p{
+        margin: 0;
+}
+.delete{
+   background-color: rgb(197, 223, 244); 
+   width: 70px;    
+}
+button:hover{
+ background-color: #a4c6e5;
+}
+ul{ padding: 0;}
+.buttdel{
+color: #738597;
+}

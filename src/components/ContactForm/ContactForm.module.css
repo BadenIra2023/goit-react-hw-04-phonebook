@@ -1,0 +1,36 @@
+span{
+font-size: large;
+}
+form{
+    font-size: large;
+        font-weight: 500;
+        color: rgb(124 136 148);
+        padding: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+}
+.inpname {
+display: block;
+        width: 100%;
+        color: rgb(124 136 148);
+        border-radius: 3px;
+        padding: 4px 15px;
+        font-size: small;
+}
+.labname{
+        color: rgb(124, 136, 148);
+                display: flex;
+                gap: 8px;
+                margin-bottom: 16px;
+}
+.buttonadd{
+        width: 200px;
+        display: block;
+        cursor: pointer;
+        color: rgb(124 136 148);
+        border-radius: 6px;
+        padding: 4px 16px;
+        font-size: large;
+        font-weight: 500;
+}

@@ -1,0 +1,18 @@
+.filter {
+    display: block;
+    width: 100%;
+    color: rgb(124 136 148);
+    border-radius: 3px;
+    padding: 4px 15px;
+    font-size: small;
+}
+.formfilter{
+
+        color: rgb(124, 136, 148);
+        display: flex;
+        gap: 8px;
+        margin-bottom: 16px;
+        padding: 12px;
+
+
+}
