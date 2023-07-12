@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import css from './ContactsList.module.css';
 
-export const ContactsList = ( {contacts, deleteContact}) => {
+export const ContactsList = ({ contacts, deleteContact }) => {
 return (<>
     <h2 className={css.title}>Contacts</h2>
     <ul>

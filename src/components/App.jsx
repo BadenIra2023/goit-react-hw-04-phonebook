@@ -1,23 +1,26 @@
 import contacts from './data/contacts.json';
+import { useState, useEffect } from 'react';
 import { nanoid } from 'nanoid';
-import { Component } from 'react';
 import { PhoneBook } from './PhoneBook/PhoneBook';
 import { ContactsList } from './ContactsList/ContactsList';
 import ContactForm from './ContactForm/ContactForm.jsx';
 import { Filter } from './Filter/Filter';
 
-export class App extends Component {
-  state = {
+export const App = () => {
+/*  state = {
     contacts: contacts,
-    filter: '',}
+    filter: '',}*/
   
-  deleteContact = id => {
-    this.setState({ contacts: this.state.contacts.filter(contact => contact.id !== id) });
+  const [contacts, setContacts] = useState([]);
+  const [filter, setFilter] = useState("");
+  
+ const deleteContact = id => {
+    setContacts( prevContacts => prevContacts.filter(contact => contact.id !== id) );
   } 
  
-  addNewContact = ({ name, number, contactIsList }) => {
+/*  const addNewContact = ({ name, number, contactIsList }) => {
     const newNameToLowerCase = name.toLowerCase();
-    const { contacts } = this.state;
+    const { contacts } = newContact;
     contacts.forEach(contact => {
       if (contact.name.toLowerCase() === newNameToLowerCase || contact.number === number) {
         alert(`${contact.name}: ${contact.number} is already in contacts`)
@@ -40,39 +43,48 @@ if (contactIsList) {
       number: number,
     };
 
-    this.setState(prevState => ({
-      contacts: [...prevState.contacts, newContact],
-    }));
+    setContacts(prevContacts => [...prevContacts, newContact]);
+
+  }; */
+const addNewContact = newContact => {
+  const { name, number } = newContact;
+  console.log(newContact)
+    if (
+      contacts.some(contact => contact.name === name) ||
+      contacts.some(contact => contact.number === number)
+    ) {
+      alert(`This one is already in contacts`);
+    } else {
+      setContacts(prevContacts => [...prevContacts, newContact]);
+    }
   };
-  valueInputFilter = event => {
-      this.setState({ filter: event.target.value });
+
+
+
+ const valueInputFilter = event => {
+   setFilter(event.target.value);
+   console.log(event.target.value)
     };
-  visibleContacts = () => {
-    const { filter, contacts } = this.state;
+ const visibleContacts =()=> {
     const seekLetterOfFilter = filter.toLowerCase();
     
     return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(seekLetterOfFilter)
-    );
+      contact.name.toLowerCase().includes(seekLetterOfFilter));
   };
-  componentDidMount() {
+
+
+  useEffect(() => {
   const fiedContacts = localStorage.getItem('contacts');
-    const contacts = JSON.parse(fiedContacts) ?? [];
+  const contacts = JSON.parse(fiedContacts) ?? [];
+  setContacts({ contacts });  console.log("змонтовано")
+  }, []);
+  
+  useEffect(() => { 
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+  }, [contacts]);
 
-    this.setState({ contacts });  console.log("змонтовано")
-  }
-  componentDidUpdate(prevProps, prevState) {
-   
- if (prevState.contacts.length !== this.state.contacts.length) {
-      const fiedContacts = JSON.stringify(this.state.contacts);
-      localStorage.setItem('contacts', fiedContacts);
-    }
-  }
-
-  render()  {
-
-    const { filter } = this.state;
-    const visibleContacts = this.visibleContacts();
+  /*  const { filter } = this.state; */
+  /*  const visibleContacts = visibleContacts();*/
    return(
      <div style={{
         margin: '0px auto' ,
@@ -84,10 +96,9 @@ if (contactIsList) {
         width: '500px',
       }}>
        < PhoneBook message={"Phonebook"} />
-       < ContactForm onSubmit={this.addNewContact} />
-       < Filter value={filter} onChange={this.valueInputFilter} />
-       < ContactsList contacts={visibleContacts} deleteContact={this.deleteContact} />
-       
+       < ContactForm onSubmit={addNewContact} /> 
+       < Filter value={filter} onChange={valueInputFilter} />
+      < ContactsList contacts={visibleContacts()} deleteContact={deleteContact} />
       </div>
   
-  ) }  }
+  ) }  

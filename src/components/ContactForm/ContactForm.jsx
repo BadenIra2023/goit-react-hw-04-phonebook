@@ -1,40 +1,46 @@
-import React, { Component } from 'react';
+import { useState } from 'react';
 import css from './ContactForm.module.css';
-import { nanoid } from 'nanoid';
-
-class ContactForm extends Component {
-  state = {
+import { nanoid } from 'nanoid'
+export default function ContactForm  ({onSubmit}) {
+/*  state = {
     name: '',
     number: '',
-  };
+  }; */
 
-handleChange = nameValueInput => event => {
+const [state, setState] = useState({
+  name: '',
+  number: '',
+});  
+  
+
+
+  
+
+const handleChange = nameValueInput => event => {
     const { target } = event;
-    this.setState({
-      [nameValueInput]: target.value,
-    });
+     setState(prevState => ({ ...prevState,[nameValueInput]: target.value,
+    }));
   };
 
-
-handleSubmit = event => {
+const handleSubmit = event => {
     event.preventDefault();
-    const { onSubmit } = this.props;
-    onSubmit(this.state);
-    this.resetForm();
+  onSubmit({ name, number }); 
+  
+    resetForm();
   };
 
-  resetForm = () => {
-    this.setState({
+  const resetForm = () => {
+    setState({
       name: '',
       number: '',
     });
   };
 
-  render() {
-    const { name, number } = this.state;
+  
+    const { name, number } = state;
 
     return (
-      <form  onSubmit={this.handleSubmit}>
+      <form  onSubmit={handleSubmit}>
         <label className={css.labname}>
             <span>Name: </span>
         
@@ -46,7 +52,7 @@ handleSubmit = event => {
             name="name"
             id={nanoid()}
             value={name}
-            onChange={this.handleChange('name')}
+            onChange={handleChange('name')}
             pattern= "^[A-Za-z\u0080-\uFFFF ']+$"
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             required
@@ -62,7 +68,7 @@ handleSubmit = event => {
             name="number"
             id={nanoid()}
             value={number}
-            onChange={this.handleChange('number')}
+            onChange={handleChange('number')}
             pattern="^(\+?[0-9.\(\)\-\s]*)$"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
@@ -74,6 +80,4 @@ handleSubmit = event => {
 
     )
    }
-}
 
-  export default ContactForm;
