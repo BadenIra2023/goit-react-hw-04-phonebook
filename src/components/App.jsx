@@ -1,4 +1,3 @@
-import contacts from './data/contacts.json';
 import { useState, useEffect } from 'react';
 import { nanoid } from 'nanoid';
 import { PhoneBook } from './PhoneBook/PhoneBook';
