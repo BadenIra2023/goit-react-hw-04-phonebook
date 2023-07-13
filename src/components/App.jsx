@@ -7,12 +7,23 @@ import ContactForm from './ContactForm/ContactForm.jsx';
 import { Filter } from './Filter/Filter';
 
 export const App = () => {
-/*  state = {
-    contacts: contacts,
-    filter: '',}*/
-  
-  const [contacts, setContacts] = useState([]);
+
+  const [contacts, setContacts] = useState([ { "id": "id-1", "name": "Rosie Simpson", "number": "459-12-56" },
+  { "id": "id-2", "name": "Hermione Kline", "number": "443-89-12" },
+  { "id": "id-3", "name": "Eden Clements", "number": "645-17-79" },
+  { "id": "id-4", "name": "Annie Copeland", "number": "227-91-26" }]);
   const [filter, setFilter] = useState("");
+
+  
+  useEffect(() => {
+  const fiedContacts = localStorage.getItem('contacts');
+  setContacts(JSON.parse(fiedContacts))
+   }, []);
+   
+  useEffect(() => { 
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+  }, [contacts]);
+
   
  const deleteContact = id => {
     setContacts( prevContacts => prevContacts.filter(contact => contact.id !== id) );
@@ -46,18 +57,20 @@ if (contactIsList) {
     setContacts(prevContacts => [...prevContacts, newContact]);
 
   }; */
+
 const addNewContact = newContact => {
   const { name, number } = newContact;
-  console.log(newContact)
-    if (
-      contacts.some(contact => contact.name === name) ||
-      contacts.some(contact => contact.number === number)
-    ) {
-      alert(`This one is already in contacts`);
-    } else {
-      setContacts(prevContacts => [...prevContacts, newContact]);
-    }
-  };
+  const contact = { id: nanoid(3), name: name, number: number };
+  const toLowerCase = contacts.find(
+  contact => contact.name.toLowerCase() === name.toLowerCase());
+  console.log(toLowerCase, contacts) 
+  if (toLowerCase) {
+       alert(`${contact.name}: ${contact.number} is already in contacts`)
+      return;
+  }  
+  
+    setContacts(prevState => [...prevState, contact]);
+  }; 
 
 
 
@@ -73,16 +86,7 @@ const addNewContact = newContact => {
   };
 
 
-  useEffect(() => {
-  const fiedContacts = localStorage.getItem('contacts');
-  const contacts = JSON.parse(fiedContacts) ?? [];
-  setContacts({ contacts });  console.log("змонтовано")
-  }, []);
-  
-  useEffect(() => { 
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
-
+ 
   /*  const { filter } = this.state; */
   /*  const visibleContacts = visibleContacts();*/
    return(
@@ -98,7 +102,9 @@ const addNewContact = newContact => {
        < PhoneBook message={"Phonebook"} />
        < ContactForm onSubmit={addNewContact} /> 
        < Filter value={filter} onChange={valueInputFilter} />
-      < ContactsList contacts={visibleContacts()} deleteContact={deleteContact} />
+       < ContactsList contacts={visibleContacts()} deleteContact={deleteContact} />
       </div>
   
-  ) }  
+  )
+} 
+   

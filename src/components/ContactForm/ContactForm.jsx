@@ -17,9 +17,13 @@ const [state, setState] = useState({
   
 
 const handleChange = nameValueInput => event => {
-    const { target } = event;
+  const { target } = event;
+  console.log(nameValueInput)
+  console.log(target)
      setState(prevState => ({ ...prevState,[nameValueInput]: target.value,
-    }));
+    
+     }));
+  console.log(state)
   };
 
 const handleSubmit = event => {
